@@ -41,18 +41,19 @@ else window.cfg = {
     proposed_maxLvl: 6,
 };
 window.theater.SPACESHIP["ShipGear"]= "bd3bc45b754e0a13257d7fe30d3d30e3057d71b06d515b9a81f0a3ebb2e8e191";
+theater = window.theater;
 
 ////////////UTILITIES //////
 function hasUncomfirmedMoveTx(p,to="") {
-    if (to == "") return p.transactions?.hasTransaction(window.serde.isUnconfirmedMoveTx);
+    if (to == "") return p.transactions?.hasTransaction(isUnconfirmedMoveTx);
 
     return (getUnconfirmedMoves()
     .filter((m) => m.from == p.locationId && m.to == to)
     .length >0
     )
 }
-function hasUncomfirmedProspectPlanetTx(p) {return p.transactions?.hasTransaction(window.serde.isUnconfirmedProspectPlanetTx)}
-function hasUncomfirmedFindArtifactTx(p) {return p.transactions?.hasTransaction(window.serde.isUnconfirmedFindArtifactTx)}
+function hasUncomfirmedProspectPlanetTx(p) {return p.transactions?.hasTransaction(isUnconfirmedProspectPlanetTx)}
+function hasUncomfirmedFindArtifactTx(p) {return p.transactions?.hasTransaction(isUnconfirmedFindArtifactTx)}
 
 function getUnconfirmedMoves(){
     let unconfirmedMoves =  df.getUnconfirmedMoves();
