@@ -32,6 +32,10 @@ let ActionEntry = {
   color: "",
 };
 /// from the original import
+function getUnconfirmedDepartures(planet) {
+  return df.getUnconfirmedMoves().filter((m) => m.intent.to == planet.locationId)
+}
+
 function checkNumInboundVoyages(planetId, from = "") {
     if (from == "") {
       return (
@@ -59,7 +63,7 @@ function checkNumInboundVoyages(planetId, from = "") {
     return (planet.energy * planet.defense) / 100;
   }
   function planetPercentEnergy(planet, percentCap = 25) {
-    const unconfirmedDepartures = planet.unconfirmedDepartures.reduce(
+    const unconfirmedDepartures = getUnconfirmedDepartures(planet).reduce(
       (acc, dep) => {
         return acc + dep.forces;
       },
@@ -69,7 +73,7 @@ function checkNumInboundVoyages(planetId, from = "") {
     return (FUZZY_ENERGY * percentCap) / 100;
   }
   function planetCurrentPercentEnergy(planet) {
-    const unconfirmedDepartures = planet.unconfirmedDepartures.reduce(
+    const unconfirmedDepartures = getUnconfirmedDepartures(planet).reduce(
       (acc, dep) => {
         return acc + dep.forces;
       },
@@ -223,7 +227,7 @@ function checkNumInboundVoyages(planetId, from = "") {
       console.error(`[pester] You don't own planet: ${yourPlanetLocationId}`);
       return;
     }
-    const unconfirmedDepartures = source.unconfirmedDepartures.reduce(
+    const unconfirmedDepartures = getUnconfirmedDepartures(source).reduce(
       (acc, dep) => {
         return acc + dep.forces;
       },
